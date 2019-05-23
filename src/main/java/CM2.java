@@ -9,26 +9,49 @@ import javax.swing.*;
 import java.awt.*;
 
 public class CM2 {
-    static double Fi_a = 3.5;
-    static double Fi_b = 1;
-    static double Fi_c = 1;
-    static double B_a = 0;
-    static double B_b = 0.25;
-    static double B_c = -0.25;
-    static double B_d = -0.5;
-    static double B_e = -0.5;
-    static double pi = 3.14;
+    private double Fi_a;
+    private double Fi_b;
+    private double Fi_c;
+    private double B_b;
+    private double B_c;
+    private double B_d;
+    private double B_e;
+    private double pi;
+    private double T;
+    private double a;
+    private double l;
+    private double tau;
+    private double h;
+    private double B_a;
 
-    static double FuncFi(double x, double l){
+    CM2(double Fi_a, double Fi_b, double Fi_c, double B_b, double B_c, double B_d, double B_e,
+        double T, double a, double l, double tau, double h, double B_a){
+        this.Fi_a = Fi_a;
+        this.Fi_b = Fi_b;
+        this.Fi_c = Fi_c;
+        this.B_b = B_b;
+        this.B_c = B_c;
+        this.B_d = B_d;
+        this.B_e = B_e;
+        this.pi = Math.PI;
+        this.T = T;
+        this.a = a;
+        this.l = l;
+        this.tau = tau;
+        this.h = h;
+        this.B_a = B_a;
+    }
+
+    private double FuncFi(double x, double l){
             return Fi_a * 1 + Fi_b * Math.cos(pi * x / l) + Fi_c * Math.cos(2 * pi * x / l);
     }
 
-    static double FuncB(double x, double l){
+    private double FuncB(double x, double l){
             return B_a * 1 + B_b * Math.cos(pi * x / l) + B_c * Math.sin(pi * x / l) +
     B_d * Math.cos(2 * pi * x / l) + B_e * Math.sin(2 * pi * x / l);
     }
 
-    static double[] RightConst(double[] y,int size,double tau){
+    private double[] RightConst(double[] y,int size,double tau){
         double l = 1, h = 0.01234;
         double[] x = new double[y.length];
         double c = size / 2;
@@ -48,25 +71,7 @@ public class CM2 {
 
     }
 
-    public static void main(String[] args) {
-
-//        double[] y = new double[200];
-//
-//        for (int i = -100; i < 100; i++) {
-//            x[i + 100] = i;
-//            y[i+ 100] = i + 12* i * i - 0.5*(i * i * i);
-//        }
-
-
-        double T = 1 ; double a  = 2; double l = 42 ; double tau = 1 ; double h = 1 ; double Fi_a = 3;
-        double Fi_b = 1 ; double Fi_c = 1; double B_a = 0 ; double B_b = 0.25 ; double B_d = 0.25 ; double B_c = 0.5 ; double B_e = 0.5 ;
-//        T = Double.valueOf(args[0]) ; l = Double.valueOf(args[1]) ; a = Double.valueOf(args[2]) ;
-//        h = Double.valueOf(args[3]) ; tau = Double.valueOf(args[4]);
-//        Fi_a = Double.valueOf(args[5]) ; Fi_b = Double.valueOf(args[6]) ; Fi_c = Double.valueOf(args[7]);
-//        B_a = Double.valueOf(args[8]) ; B_b = Double.valueOf(args[9]) ; B_c = Double.valueOf(args[10]) ;
-//        B_d = Double.valueOf(args[11]) ; B_e = Double.valueOf(args[12]);
-
-
+    public double[][] main() {
         int size = (int)(l / h);
         double[] x = new double[size];
         double[] y = new double[size];
@@ -132,31 +137,10 @@ public class CM2 {
 
         for(int i =0; i <(size-1); i++)
             x[i] = i * h;
-
-//        print(b)
-//        print(y0)
-//        print(yb)
-
-//        plt.plot(x, yb, color='black')
-//        plt.grid()
-//        plt.minorticks_on()
-//        plt.grid(which='minor', color = 'gray', linestyle = ':')
-//        plt.plot(x, y0, color='blue')
-//        plt.plot(x, b, color='red')
-//        plt.show()
-        // create your PlotPanel (you can use it as a JPanel)
-        Plot2DPanel plot = new Plot2DPanel();
-
-        // add a line plot to the PlotPanel
-        plot.addLinePlot("my plot", Color.CYAN, x, yb);
-//        plot.addPlot()
-
-        // put the PlotPanel in a JFrame, as a JPanel
-        JFrame frame = new JFrame("a plot panel");
-        frame.setContentPane(plot);
-        frame.setVisible(true);
-        frame.setSize(1000, 1000);
-
+        double[][] result = new double[2][];
+        result[0] = x;
+        result[1] = yb;
+        return result;
     }
 
 }
