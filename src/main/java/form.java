@@ -2,10 +2,8 @@ import org.math.plot.Plot2DPanel;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
+import java.awt.event.*;
+import java.util.Arrays;
 
 public class form extends JFrame{
     private JButton button1;
@@ -25,6 +23,9 @@ public class form extends JFrame{
     private JTextField B_cin;
     private JTextField B_din;
     private JTextField B_ein;
+    private String label = "";
+    private JLabel formulaField;
+    private JLabel formulaField1;
     double Fi_a;
     double Fi_b;
     double Fi_c;
@@ -57,11 +58,24 @@ public class form extends JFrame{
         this.h = Double.valueOf(hin.getText());
     }
 
+    private String getFormula(){
+        getFields();
+        return "Fi = " + Fi_a +" * 1 +" + Fi_b + " * Math.cos(pi * x / " + l +") + " + Fi_c + " * cos(2 * pi * x /" +l+")";
+    }
+    private String getFormula1(){
+        getFields();
+        return "B = " + "B_a" + "* 1 + " + B_b + "* Math.cos(pi * x / l)" + B_c + "* Math.sin(pi * x / l)" +
+                B_d + "* Math.cos(2 * pi * x / l)" + B_e + "* Math.sin(2 * pi * x / l)";
+    }
+
+
     public form() {
         outputPanel.setVisible(true);
         setContentPane(mainPanel);
         setVisible(true);
         outputPanel.setSize(500,500);
+        formulaField.setText(getFormula());
+        formulaField1.setText(getFormula1());
 
         button1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -78,12 +92,33 @@ public class form extends JFrame{
                 outputPanel.invalidate();
             }
         });
+        KeyAdapter listener = new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                super.keyTyped(e);
+                formulaField.setText(getFormula());
+                formulaField1.setText(getFormula1());
+            }
+        };
+        Fi_cin.addKeyListener(listener);
+        Tin.addKeyListener(listener);
+        Fi_bin.addKeyListener(listener);
+        Fi_ain.addKeyListener(listener);
+        tauin.addKeyListener(listener);
+        hin.addKeyListener(listener);
+        Lin.addKeyListener(listener);
+        B_ain.addKeyListener(listener);
+        B_bin.addKeyListener(listener);
+        B_cin.addKeyListener(listener);
+        B_din.addKeyListener(listener);
+        B_ein.addKeyListener(listener);
+        Ain.addKeyListener(listener);
     }
 
     public static void main(String[] args) throws InterruptedException {
 
         form G = new form();
-        G.setSize(1400,1000);
+        G.setSize(1800,900);
         G.setVisible(true);
         G.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         while (true){
