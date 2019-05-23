@@ -38,6 +38,8 @@ public class form extends JFrame{
     double l;
     double tau;
     double h;
+    int a1, a2, a3;
+
 
     private void getFields() {
         this.Fi_a = Double.valueOf(Fi_ain.getText());
@@ -60,7 +62,6 @@ public class form extends JFrame{
         setContentPane(mainPanel);
         setVisible(true);
         outputPanel.setSize(500,500);
-//        plot = new Plot2DPanel();
 
         button1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -68,13 +69,13 @@ public class form extends JFrame{
                 CM2 cm2 = new CM2(Fi_a, Fi_b, Fi_c, B_b, B_c, B_d, B_e,
                         T, a, l, tau, h, B_a);
                 double res[][] = cm2.main();
-//                plot = new Plot2DPanel();
-                plot.addLinePlot("my plot", Color.CYAN, res[0], res[1]);
+                plot.removeAllPlots();
+                a1 = plot.addLinePlot("my plot", Color.RED, res[0], res[1]);
+                a2 = plot.addLinePlot("my plot", Color.BLACK, res[0], res[2]);
+                a3 = plot.addLinePlot("my plot", Color.BLUE, res[0], res[3]);
+
                 outputPanel = plot;
                 outputPanel.invalidate();
-//                add(plot);
-//                revalidate();
-//                repaint();
             }
         });
     }
@@ -87,23 +88,11 @@ public class form extends JFrame{
         G.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         while (true){
             Thread.sleep(500);
-            G.outputPanel.revalidate();
-//            G.repaint();
-//            G.outputPanel = G.plot;
-//            G.outputPanel.setSize(500,500);
-//            G.outputPanel.setVisible(true);
-//            G.outputPanel.repaint();
         }
     }
 
     private void createUIComponents() {
-        // TODO: place custom component creation code here
-//        getFields();
-//        CM2 cm2 = new CM2(Fi_a, Fi_b, Fi_c, B_b, B_c, B_d, B_e,
-//                T, a, l, tau, h, B_a);
-//        double res[][] = cm2.main();
         plot = new Plot2DPanel();
-//        plot.addLinePlot("my plot", Color.CYAN, res[0], res[1]);
         outputPanel = plot;
         outputPanel.setSize(500,500);
         outputPanel.setVisible(true);

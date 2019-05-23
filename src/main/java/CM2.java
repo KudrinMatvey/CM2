@@ -85,8 +85,8 @@ public class CM2 {
         y[i] = FuncFi(i * h, l);
 
         for(int i = 0; i <size; i++){
-        y0[i] = FuncFi(i * h, l);
-        b[i] = FuncB(i * h, l);
+            y0[i] = FuncFi(i * h, l);
+            b[i] = FuncB(i * h, l);
         }
         double coef1 = (-1) * (a * a) / (h * h);
         double coef2 = ((2 * a * a) / (h * h)) + (1 / tau);
@@ -137,9 +137,12 @@ public class CM2 {
 
         for(int i =0; i <(size-1); i++)
             x[i] = i * h;
-        double[][] result = new double[2][];
+        double[][] result = new double[4][];
         result[0] = x;
         result[1] = yb;
+        result[2] = y0;
+        result[3] = b;
+
         return result;
     }
 
